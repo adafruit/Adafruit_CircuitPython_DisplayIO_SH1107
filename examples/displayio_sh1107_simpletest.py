@@ -7,7 +7,7 @@ import board
 import displayio
 import terminalio
 from adafruit_display_text import label
-import adafruit_displayio_ssd1306
+import mdroberts1243_displayio_sh1107
 
 displayio.release_displays()
 
@@ -24,11 +24,12 @@ display_bus = displayio.I2CDisplay(i2c, device_address=0x3C, reset=oled_reset)
 # display_bus = displayio.FourWire(spi, command=oled_dc, chip_select=oled_cs,
 #                                 reset=oled_reset, baudrate=1000000)
 
-WIDTH = 128
-HEIGHT = 32  # Change to 64 if needed
+# SH1107 is vertically oriented 64x128
+WIDTH = 64
+HEIGHT = 128
 BORDER = 5
 
-display = adafruit_displayio_ssd1306.SSD1306(display_bus, width=WIDTH, height=HEIGHT)
+display = mdroberts1243_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT, rotation=90)
 
 # Make the display context
 splash = displayio.Group(max_size=10)

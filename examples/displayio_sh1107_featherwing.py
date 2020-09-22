@@ -7,13 +7,13 @@ import board
 import displayio
 import terminalio
 from adafruit_display_text import label
-import adafruit_displayio_ssd1306
+import mdroberts1243_displayio_sh1107
 
 displayio.release_displays()
 
 i2c = board.I2C()
 display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
-display = adafruit_displayio_ssd1306.SSD1306(display_bus, width=128, height=32)
+display = mdroberts1243_displayio_sh1107.SH1107(display_bus, width=64, height=128, rotation=90)
 
 # Make the display context
 splash = displayio.Group(max_size=10)

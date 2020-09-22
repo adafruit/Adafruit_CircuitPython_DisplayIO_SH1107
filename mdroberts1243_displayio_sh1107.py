@@ -88,9 +88,9 @@ class SH1107(displayio.Display):
             color_depth=1,
             grayscale=True,
             pixels_in_byte_share_row=False,
-            set_column_command=None, # sh1107 doesn't have a traditional set column command
-            set_row_command=None, # sh1107 will set page, actually.
-            data_as_commands=True, # I hope this means 0x80 for each byte in the init sequence.
+#            set_column_command=None, # sh1107 doesn't have a traditional set column command
+#            set_row_command=None, # sh1107 will set page, actually.
+            data_as_commands=True, # Not sure of the meaning of this.
             set_vertical_scroll=0xD3,
             brightness_command=0x81,
             single_byte_bounds=True,
