@@ -8,7 +8,8 @@ background, a smaller black rectangle, miscellaneous stuff and some white text.
 import board
 import displayio
 import terminalio
-import bitmap_label as label # from adafruit_display_text
+# can try import bitmap_label below for alternative
+import label as label # from adafruit_display_text
 import mdroberts1243_displayio_sh1107
 
 displayio.release_displays()
@@ -45,15 +46,15 @@ splash.append(inner_sprite)
 
 # Draw some white squares
 sm_bitmap = displayio.Bitmap(8,8,1)
-sm_square = displayio.TileGrid(sm_bitmap, pixel_shader=color_palette, x=65, y=5)
+sm_square = displayio.TileGrid(sm_bitmap, pixel_shader=color_palette, x=58, y=17)
 splash.append(sm_square)
 
 med_bitmap = displayio.Bitmap(16,16,1)
-med_square = displayio.TileGrid(med_bitmap, pixel_shader=color_palette, x=74, y=13)
+med_square = displayio.TileGrid(med_bitmap, pixel_shader=color_palette, x=71, y=15)
 splash.append(med_square)
 
 lrg_bitmap = displayio.Bitmap(32,32,1)
-lrg_square = displayio.TileGrid(lrg_bitmap, pixel_shader=color_palette, x=91, y=29)
+lrg_square = displayio.TileGrid(lrg_bitmap, pixel_shader=color_palette, x=91, y=28)
 splash.append(lrg_square)
 
 # Draw some label text
