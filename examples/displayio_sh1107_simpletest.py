@@ -1,35 +1,29 @@
 """
+Author: Mark Roberts (mdroberts1243) from Adafruit code
 This test will initialize the display using displayio and draw a solid white
-background, a smaller black rectangle, and some white text.
+background, a smaller black rectangle, miscellaneous stuff and some white text.
+
 """
 
 import board
 import displayio
 import terminalio
-from adafruit_display_text import label
+import bitmap_label as label # from adafruit_display_text
 import mdroberts1243_displayio_sh1107
 
 displayio.release_displays()
-
-oled_reset = board.D9
+#oled_reset = board.D9
 
 # Use for I2C
 i2c = board.I2C()
-display_bus = displayio.I2CDisplay(i2c, device_address=0x3C, reset=oled_reset)
-
-# Use for SPI
-# spi = board.SPI()
-# oled_cs = board.D5
-# oled_dc = board.D6
-# display_bus = displayio.FourWire(spi, command=oled_dc, chip_select=oled_cs,
-#                                 reset=oled_reset, baudrate=1000000)
+display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
 
 # SH1107 is vertically oriented 64x128
-WIDTH = 64
-HEIGHT = 128
-BORDER = 5
+WIDTH = 128
+HEIGHT = 64
+BORDER = 2
 
-display = mdroberts1243_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT, rotation=90)
+display = mdroberts1243_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT)
 
 # Make the display context
 splash = displayio.Group(max_size=10)
@@ -42,21 +36,33 @@ color_palette[0] = 0xFFFFFF  # White
 bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=0)
 splash.append(bg_sprite)
 
-# Draw a smaller inner rectangle
+# Draw a smaller inner rectangle in black
 inner_bitmap = displayio.Bitmap(WIDTH - BORDER * 2, HEIGHT - BORDER * 2, 1)
 inner_palette = displayio.Palette(1)
 inner_palette[0] = 0x000000  # Black
-inner_sprite = displayio.TileGrid(
-    inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER
-)
+inner_sprite = displayio.TileGrid(inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER)
 splash.append(inner_sprite)
 
-# Draw a label
-text = "Hello World!"
-text_area = label.Label(
-    terminalio.FONT, text=text, color=0xFFFFFF, x=28, y=HEIGHT // 2 - 1
-)
+# Draw some white squares
+sm_bitmap = displayio.Bitmap(8,8,1)
+sm_square = displayio.TileGrid(sm_bitmap, pixel_shader=color_palette, x=65, y=5)
+splash.append(sm_square)
+
+med_bitmap = displayio.Bitmap(16,16,1)
+med_square = displayio.TileGrid(med_bitmap, pixel_shader=color_palette, x=74, y=13)
+splash.append(med_square)
+
+lrg_bitmap = displayio.Bitmap(32,32,1)
+lrg_square = displayio.TileGrid(lrg_bitmap, pixel_shader=color_palette, x=91, y=29)
+splash.append(lrg_square)
+
+# Draw some label text
+text1 = "0123456789ABCDEF123456789AB" # overly long to see where it clips
+text_area = label.Label(terminalio.FONT, text=text1, color=0xFFFFFF, x=8, y=8)
 splash.append(text_area)
+text2 = "SH1107"
+text_area2 = label.Label(terminalio.FONT, text=text2, scale=2, color=0xFFFFFF, x=9, y=44)
+splash.append(text_area2)
 
 while True:
     pass
