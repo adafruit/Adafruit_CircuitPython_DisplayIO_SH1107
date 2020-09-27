@@ -64,10 +64,11 @@ text1 = "0123456789ABCDEF123456789AB" # overly long to see where it clips
 text_area = label.Label(terminalio.FONT, text=text1, color=0xFFFFFF, x=8, y=8)
 splash.append(text_area)
 text2 = "SH1107"
-text_area2 = label.Label(terminalio.FONT, text=text2, scale=2, color=0xFFFFFF, x=9, y=44)
+x=9
+y=44
+text_area2 = label.Label(terminalio.FONT, text=text2, scale=2, color=0xFFFFFF, x=x, y=y)
 splash.append(text_area2)
-x=129
-y=65
+time.sleep(1)
 while True:
     if x >= 128 or x < 0:
         x = int(random.random()*128)
