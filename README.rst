@@ -25,6 +25,7 @@ Dependencies
 This driver depends on:
 
 * `Adafruit CircuitPython Version 6+ <https://github.com/adafruit/circuitpython>`_ A new quirk in 6.0 for SH1107
+* Adafruit SH1107 128 x 64 OLED display, used for testing.
 
 Please ensure all dependencies are available on the CircuitPython filesystem.
 This is easily achieved by downloading
