@@ -1,6 +1,9 @@
-
+# SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+# SPDX-FileCopyrightText: Copyright (c) 2020 Mark Roberts for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
 """
-`mdroberts1243_displayio_sh1107`
+`adafruit_displayio_sh1107`
 ================================================================================
 
 DisplayIO driver for SH1107 monochrome displays
@@ -19,37 +22,38 @@ Implementation Notes
 
 * Adafruit CircuitPython (version 5+) firmware for the supported boards:
   https://github.com/adafruit/circuitpython/releases
-* A new quirk is required on DisplayIO -- TBD
 
 """
 
 import displayio
 
 __version__ = "0.0.0-auto.0"
-__repo__ = "https://github.com/mdroberts1243/mdroberts1243_CircuitPython_DisplayIO_SH1107.git"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
 
 # Sequence from sh1107 framebuf driver formatted for displayio init
 _INIT_SEQUENCE = (
-    b"\xae\x00"         # display off, sleep mode
-    b"\xdc\x01\x00"     # display start line = 0 (POR = 0)
-    b"\x81\x01\x2f"     # contrast setting = 0x2f
-    b"\x21\x00"         # vertical (column) addressing mode (POR=0x20)
-    b"\xa0\x00"         # segment remap = 1 (POR=0, down rotation)
-    b"\xcf\x00"         # common output scan direction = 15 (0 to n-1 (POR=0))
-    b"\xa8\x01\x7f"     # multiplex ratio = 128 (POR)
-    b"\xd3\x01\x60"     # set display offset mode = 0x60
-    b"\xd5\x01\x51"     # divide ratio/oscillator: divide by 2, fOsc (POR)
-    b"\xd9\x01\x22"     # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
-    b"\xdb\x01\x35"     # VCOM deselect level = 0.770 (POR)
-    b"\xb0\x00"         # set page address = 0 (POR)
-    b"\xa4\x00"         # entire display off, retain RAM, normal status (POR)
-    b"\xa6\x00"         # normal (not reversed) display
-    b"\xAF\x00\x00"     # DISPLAY_ON
+    b"\xae\x00"  # display off, sleep mode
+    b"\xdc\x01\x00"  # display start line = 0 (POR = 0)
+    b"\x81\x01\x2f"  # contrast setting = 0x2f
+    b"\x21\x00"  # vertical (column) addressing mode (POR=0x20)
+    b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
+    b"\xcf\x00"  # common output scan direction = 15 (0 to n-1 (POR=0))
+    b"\xa8\x01\x7f"  # multiplex ratio = 128 (POR)
+    b"\xd3\x01\x60"  # set display offset mode = 0x60
+    b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
+    b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
+    b"\xdb\x01\x35"  # VCOM deselect level = 0.770 (POR)
+    b"\xb0\x00"  # set page address = 0 (POR)
+    b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
+    b"\xa6\x00"  # normal (not reversed) display
+    b"\xAF\x00\x00"  # DISPLAY_ON
 )
+
 
 # pylint: disable=too-few-public-methods
 class SH1107(displayio.Display):
     """SSD1107 driver"""
+
     def __init__(self, bus, **kwargs):
         init_sequence = bytearray(_INIT_SEQUENCE)
         super().__init__(
@@ -59,13 +63,13 @@ class SH1107(displayio.Display):
             color_depth=1,
             grayscale=True,
             pixels_in_byte_share_row=True,  # in vertical (column) mode
-            data_as_commands=True,          # every byte will have a command byte preceeding
-            set_vertical_scroll=0xD3,       # TBD -- not sure about this one!
+            data_as_commands=True,  # every byte will have a command byte preceeding
+            set_vertical_scroll=0xD3,  # TBD -- not sure about this one!
             brightness_command=0x81,
             single_byte_bounds=True,
             # for sh1107 use column and page addressing.
             #                lower column command = 0x00 - 0x0F
             #                upper column command = 0x10 - 0x17
             #                set page address     = 0xB0 - 0xBF (16 pages)
-            SH1107_addressing = True
+            SH1107_addressing=True,
         )
