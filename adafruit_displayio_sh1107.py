@@ -46,7 +46,7 @@ _INIT_SEQUENCE = (
     b"\xb0\x00"  # set page address = 0 (POR)
     b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
     b"\xa6\x00"  # normal (not reversed) display
-    b"\xAF\x00\x00"  # DISPLAY_ON
+    b"\xaf\x00"  # DISPLAY_ON
 )
 
 
