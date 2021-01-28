@@ -50,7 +50,6 @@ _INIT_SEQUENCE = (
 )
 
 
-# pylint: disable=too-few-public-methods
 class SH1107(displayio.Display):
     """SSD1107 driver"""
 
@@ -73,3 +72,36 @@ class SH1107(displayio.Display):
             #                set page address     = 0xB0 - 0xBF (16 pages)
             SH1107_addressing=True,
         )
+        self._awake = True  # Display starts in active state (_INIT_SEQUENCE)
+
+    @property
+    def state(self):
+        """
+        The power state of the display. (read-only)
+
+        True if the display is active, False if in sleep mode.
+        """
+        return self._awake
+
+    def sleep(self):
+        """
+        Put display into sleep mode
+
+        The display uses < 5uA in sleep mode
+        Sleep mode does the following:
+           1) Stops the oscillator and DC-DC circuits
+           2) Stops the OLED drive
+           3) Remembers display data and operation mode active prior to sleeping
+           4) The MP can access (update) the built-in display RAM
+        """
+        if self._awake:
+            self.bus.send(int(0xAE), "")  # 0xAE = display off, sleep mode
+            self._awake = False
+
+    def wake(self):
+        """
+        Wake display from sleep mode
+        """
+        if not self._awake:
+            self.bus.send(int(0xAF), "")  # 0xAF = display on
+            self._awake = True
