@@ -10,6 +10,7 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
+
 # To use a consistent encoding
 from codecs import open as open_codec
 from os import path
@@ -34,7 +35,9 @@ setup(
     # Author details
     author="Adafruit Industries",
     author_email="circuitpython@adafruit.com",
-    install_requires=["Adafruit-Blinka",],
+    install_requires=[
+        "Adafruit-Blinka",
+    ],
     # Choose your license
     license="MIT",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
