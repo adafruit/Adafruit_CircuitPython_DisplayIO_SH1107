@@ -89,10 +89,10 @@ class SH1107(displayio.Display):
 
         The display uses < 5uA in sleep mode
         Sleep mode does the following:
-           1) Stops the oscillator and DC-DC circuits
-           2) Stops the OLED drive
-           3) Remembers display data and operation mode active prior to sleeping
-           4) The MP can access (update) the built-in display RAM
+        1) Stops the oscillator and DC-DC circuits
+        2) Stops the OLED drive
+        3) Remembers display data and operation mode active prior to sleeping
+        4) The MP can access (update) the built-in display RAM
         """
         if self._awake:
             self.bus.send(int(0xAE), "")  # 0xAE = display off, sleep mode
