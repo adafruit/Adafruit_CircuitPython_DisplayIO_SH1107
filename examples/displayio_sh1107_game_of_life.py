@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+#
+# SPDX-License-Identifier: Unlicense
 """
 Author: Mark Roberts (mdroberts1243) from Adafruit code
 Conway's game of life.
