@@ -64,7 +64,7 @@ Usage Example
     import displayio
     import terminalio
     import bitmap_label as label # from adafruit_display_text
-    import mdroberts1243_displayio_sh1107
+    import adafruit_displayio_sh1107
 
     displayio.release_displays()
     #oled_reset = board.D9
@@ -78,7 +78,7 @@ Usage Example
     HEIGHT = 64
     BORDER = 2
 
-    display = mdroberts1243_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT)
+    display = adafruit_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT)
 
     # Make the display context
     splash = displayio.Group(max_size=10)

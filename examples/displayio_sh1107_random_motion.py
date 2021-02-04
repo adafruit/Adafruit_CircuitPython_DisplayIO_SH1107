@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+#
+# SPDX-License-Identifier: Unlicense
 """
 Author: Mark Roberts (mdroberts1243) from Adafruit code
 This test will initialize the display using displayio and draw a solid white

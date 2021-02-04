@@ -10,16 +10,17 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
-from setuptools import setup, find_packages
 
 # To use a consistent encoding
-from codecs import open
+from codecs import open as open_codec
 from os import path
+
+from setuptools import setup
 
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, "README.rst"), encoding="utf-8") as f:
+with open_codec(path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
@@ -34,7 +35,9 @@ setup(
     # Author details
     author="Adafruit Industries",
     author_email="circuitpython@adafruit.com",
-    install_requires=["Adafruit-Blinka",],
+    install_requires=[
+        "Adafruit-Blinka",
+    ],
     # Choose your license
     license="MIT",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
