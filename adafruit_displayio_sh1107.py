@@ -72,16 +72,16 @@ class SH1107(displayio.Display):
             #                set page address     = 0xB0 - 0xBF (16 pages)
             SH1107_addressing=True,
         )
-        self.is_awake = True  # Display starts in active state (_INIT_SEQUENCE)
+        self._is_awake = True  # Display starts in active state (_INIT_SEQUENCE)
 
     @property
-    def state(self):
+    def is_awake(self):
         """
         The power state of the display. (read-only)
 
         True if the display is active, False if in sleep mode.
         """
-        return self.is_awake
+        return self._is_awake
 
     def sleep(self):
         """
@@ -94,14 +94,14 @@ class SH1107(displayio.Display):
         3) Remembers display data and operation mode active prior to sleeping
         4) The MP can access (update) the built-in display RAM
         """
-        if self.is_awake:
+        if self._is_awake:
             self.bus.send(int(0xAE), "")  # 0xAE = display off, sleep mode
-            self.is_awake = False
+            self._is_awake = False
 
     def wake(self):
         """
         Wake display from sleep mode
         """
-        if not self.is_awake:
+        if not self._is_awake:
             self.bus.send(int(0xAF), "")  # 0xAF = display on
-            self.is_awake = True
+            self._is_awake = True
