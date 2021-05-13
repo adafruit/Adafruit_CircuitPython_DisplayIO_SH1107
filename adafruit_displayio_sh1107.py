@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
 # SPDX-FileCopyrightText: Copyright (c) 2020 Mark Roberts for Adafruit Industries
+# SPDX-FileCopyrightText: 2021 James Carr
 #
 # SPDX-License-Identifier: MIT
 """
@@ -9,7 +10,7 @@
 DisplayIO driver for SH1107 monochrome displays
 
 
-* Author(s): Scott Shawcroft, Mark Roberts (mdroberts1243)
+* Author(s): Scott Shawcroft, Mark Roberts (mdroberts1243), James Carr
 
 Implementation Notes
 --------------------
@@ -26,9 +27,42 @@ Implementation Notes
 """
 
 import displayio
+from micropython import const
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
+
+
+DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650 = const(0x60)
+"""
+The hardware display offset to use when configuring the SH1107 for the
+`Adafruit Featherwing 128x64 OLED <https://www.adafruit.com/product/4650>`_
+
+.. code-block::
+
+    from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650
+
+    # Simplest constructor, assumes it is an Adafruit FeatherWing 128x64 OLED
+    display = SH1107(bus, width=128, height=64,
+        display_offset=DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650)
+    # Or as it's the default
+    display = SH1107(bus, width=128, height=64)
+"""
+
+DISPLAY_OFFSET_PIMORONI_MONO_OLED_PIM374 = const(0x00)
+"""
+The hardware display offset to use when configuring the SH1107 for the
+`Pimoroni Mono 128x128 OLED <https://shop.pimoroni.com/products/1-12-oled-breakout>`_
+
+.. code-block::
+
+    from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_PIMORONI_MONO_OLED_PIM374
+
+    # Constructor for the Pimoroni Mono 128x128 OLED
+    display = SH1107(bus, width=128, height=128,
+        display_offset=DISPLAY_OFFSET_PIMORONI_MONO_OLED_PIM374)
+"""
+
 
 # Sequence from sh1107 framebuf driver formatted for displayio init
 _INIT_SEQUENCE = (
@@ -51,10 +85,27 @@ _INIT_SEQUENCE = (
 
 
 class SH1107(displayio.Display):
-    """SSD1107 driver"""
+    """
+    SSD1107 driver for use with DisplayIO
 
-    def __init__(self, bus, **kwargs):
+    :param bus: The bus that the display is connected to.
+    :param int width: The width of the display. Maximum of 128
+    :param int height: The height of the display. Maximum of 128
+    :param int rotation: The rotation of the display. 0, 90, 180 or 270.
+    :param int display_offset: The display offset that the first column is wired to.
+        This will be dependent on the OLED display and two displays with the
+        same dimensions could have different offsets. This defaults to
+        `DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650`
+    """
+
+    def __init__(
+        self,
+        bus,
+        display_offset=DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
+        **kwargs
+    ):
         init_sequence = bytearray(_INIT_SEQUENCE)
+        init_sequence[19] = display_offset
         super().__init__(
             bus,
             init_sequence,
