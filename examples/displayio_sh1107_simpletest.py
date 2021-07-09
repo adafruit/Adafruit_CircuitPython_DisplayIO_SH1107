@@ -27,11 +27,10 @@ display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
 # SH1107 is vertically oriented 64x128
 WIDTH = 128
 HEIGHT = 64
-ROTATION = 90
 BORDER = 2
 
 display = adafruit_displayio_sh1107.SH1107(
-    display_bus, width=WIDTH, height=HEIGHT, rotation=ROTATION
+    display_bus, width=WIDTH, height=HEIGHT, rotation=0
 )
 
 # Make the display context
