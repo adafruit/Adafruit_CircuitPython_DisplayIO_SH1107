@@ -28,7 +28,7 @@ Implementation Notes
 
 import displayio
 from micropython import const
-import os
+import sys
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
@@ -67,7 +67,7 @@ The hardware display offset to use when configuring the SH1107 for the
 
 # Sequence from sh1107 framebuf driver formatted for displayio init
 # we fixed sh110x addressing in 7, so we have slightly different setups
-if int(os.uname().release.split('.')[0]) < 7:
+if sys.implementation.version[0] < 7:
     _INIT_SEQUENCE = (
         b"\xae\x00"  # display off, sleep mode
         b"\xdc\x01\x00"  # display start line = 0 (POR = 0)
