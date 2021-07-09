@@ -28,6 +28,7 @@ Implementation Notes
 
 import displayio
 from micropython import const
+import os
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
@@ -65,24 +66,45 @@ The hardware display offset to use when configuring the SH1107 for the
 
 
 # Sequence from sh1107 framebuf driver formatted for displayio init
-_INIT_SEQUENCE = (
-    b"\xae\x00"  # display off, sleep mode
-    b"\xdc\x01\x00"  # display start line = 0 (POR = 0)
-    b"\x81\x01\x2f"  # contrast setting = 0x2f
-    b"\x21\x00"  # vertical (column) addressing mode (POR=0x20)
-    b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
-    b"\xcf\x00"  # common output scan direction = 15 (0 to n-1 (POR=0))
-    b"\xa8\x01\x7f"  # multiplex ratio = 128 (POR)
-    b"\xd3\x01\x60"  # set display offset mode = 0x60
-    b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
-    b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
-    b"\xdb\x01\x35"  # VCOM deselect level = 0.770 (POR)
-    b"\xb0\x00"  # set page address = 0 (POR)
-    b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
-    b"\xa6\x00"  # normal (not reversed) display
-    b"\xaf\x00"  # DISPLAY_ON
-)
-
+# we fixed sh110x addressing in 7, so we have slightly different setups
+if int(os.uname().release.split('.')[0]) < 7:
+    _INIT_SEQUENCE = (
+        b"\xae\x00"  # display off, sleep mode
+        b"\xdc\x01\x00"  # display start line = 0 (POR = 0)
+        b"\x81\x01\x2f"  # contrast setting = 0x2f
+        b"\x21\x00"  # vertical (column) addressing mode (POR=0x20)
+        b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
+        b"\xcf\x00"  # common output scan direction = 15 (0 to n-1 (POR=0))
+        b"\xa8\x01\x7f"  # multiplex ratio = 128 (POR)
+        b"\xd3\x01\x60"  # set display offset mode = 0x60
+        b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
+        b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
+        b"\xdb\x01\x35"  # VCOM deselect level = 0.770 (POR)
+        b"\xb0\x00"  # set page address = 0 (POR)
+        b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
+        b"\xa6\x00"  # normal (not reversed) display
+        b"\xaf\x00"  # DISPLAY_ON
+    )
+    _PIXELS_IN_ROW = True
+else:
+    _INIT_SEQUENCE = (
+        b"\xae\x00"  # display off, sleep mode
+        b"\xdc\x01\x00"  # set display start line 0
+        b"\x81\x01\x4f"  # contrast setting = 0x2f
+        b"\x20\x00"  # vertical (column) addressing mode (POR=0x20)
+        b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
+        b"\xc0\x00"  # common output scan direction = 15 (0 to n-1 (POR=0))
+        b"\xa8\x01\x3f"  # multiplex ratio = 128 (POR)
+        b"\xd3\x01\x60"  # set display offset mode = 0x60
+        #b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
+        b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
+        b"\xdb\x01\x35"  # VCOM deselect level = 0.770 (POR)
+        #b"\xb0\x00"  # set page address = 0 (POR)
+        b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
+        b"\xa6\x00"  # normal (not reversed) display
+        b"\xaf\x00"  # DISPLAY_ON
+    )
+    _PIXELS_IN_ROW = False
 
 class SH1107(displayio.Display):
     """
@@ -112,7 +134,7 @@ class SH1107(displayio.Display):
             **kwargs,
             color_depth=1,
             grayscale=True,
-            pixels_in_byte_share_row=True,  # in vertical (column) mode
+            pixels_in_byte_share_row=_PIXELS_IN_ROW,  # in vertical (column) mode
             data_as_commands=True,  # every byte will have a command byte preceeding
             set_vertical_scroll=0xD3,  # TBD -- not sure about this one!
             brightness_command=0x81,
