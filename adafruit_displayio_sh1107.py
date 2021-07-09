@@ -26,9 +26,9 @@ Implementation Notes
 
 """
 
+import sys
 import displayio
 from micropython import const
-import sys
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
@@ -97,16 +97,17 @@ else:
         b"\xc0\x00"  # common output scan direction = 15 (0 to n-1 (POR=0))
         b"\xa8\x01\x3f"  # multiplex ratio = 128 (POR)
         b"\xd3\x01\x60"  # set display offset mode = 0x60
-        #b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
+        # b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
         b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
         b"\xdb\x01\x35"  # VCOM deselect level = 0.770 (POR)
-        #b"\xb0\x00"  # set page address = 0 (POR)
+        # b"\xb0\x00"  # set page address = 0 (POR)
         b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
         b"\xa6\x00"  # normal (not reversed) display
         b"\xaf\x00"  # DISPLAY_ON
     )
     _PIXELS_IN_ROW = False
     _ROTATION_OFFSET = 90
+
 
 class SH1107(displayio.Display):
     """
