@@ -29,7 +29,9 @@ WIDTH = 128
 HEIGHT = 64
 BORDER = 2
 
-display = adafruit_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIGHT)
+display = adafruit_displayio_sh1107.SH1107(
+    display_bus, width=WIDTH, height=HEIGHT, rotation=0
+)
 
 # Make the display context
 splash = displayio.Group()
