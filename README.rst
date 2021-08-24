@@ -17,7 +17,7 @@ Introduction
     :target: https://github.com/psf/black
     :alt: Code Style: Black
 
-DisplayIO driver for SH1107 monochrome displays. DisplayIO drivers enable terminal output. This driver depends on a future (TBD) quirk added to DisplayIO.
+DisplayIO driver for SH1107 monochrome displays. DisplayIO drivers enable terminal output.
 
 
 Dependencies
@@ -25,11 +25,11 @@ Dependencies
 This driver depends on:
 
 * `Adafruit CircuitPython Version 6+ <https://github.com/adafruit/circuitpython>`_ A new quirk in 6.0 for SH1107
-* Adafruit SH1107 128 x 64 OLED display, used for testing.
+* An SH1107 OLED display, eg. `Adafruit FeatherWing 128 x 64 OLED <https://www.adafruit.com/product/4650>`_
 
 Please ensure all dependencies are available on the CircuitPython filesystem.
-This is easily achieved by downloading
-`the Adafruit library and driver bundle <https://circuitpython.org/libraries>`_.
+This is easily achieved by downloading the
+`Adafruit library and driver bundle <https://circuitpython.org/libraries>`_.
 
 Installing from PyPI
 =====================
