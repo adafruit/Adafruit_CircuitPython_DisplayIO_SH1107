@@ -97,7 +97,7 @@ else:
         b"\x20\x00"  # vertical (column) addressing mode (POR=0x20)
         b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
         b"\xc0\x00"  # common output scan direction = 0 (0 to n-1 (POR=0))
-        b"\xa8\x01\x3f"  # multiplex ratio = 64 (POR=0x7F)
+        b"\xa8\x01\x7f"  # multiplex ratio = 128 (POR=0x7F)
         b"\xd3\x01\x60"  # set display offset mode = 0x60
         # b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
         b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
@@ -132,7 +132,13 @@ class SH1107(displayio.Display):
         rotation=0,
         **kwargs
     ):
+        rotation = (rotation + _ROTATION_OFFSET) % 360
+        if rotation in (0, 180):
+            multiplex = kwargs["width"] - 1
+        else:
+            multiplex = kwargs["height"] - 1
         init_sequence = bytearray(_INIT_SEQUENCE)
+        init_sequence[16] = multiplex
         init_sequence[19] = display_offset
         super().__init__(
             bus,
@@ -144,7 +150,7 @@ class SH1107(displayio.Display):
             data_as_commands=True,  # every byte will have a command byte preceding
             brightness_command=0x81,
             single_byte_bounds=True,
-            rotation=(rotation + _ROTATION_OFFSET) % 360,
+            rotation=rotation,
             # for sh1107 use column and page addressing.
             #                lower column command = 0x00 - 0x0F
             #                upper column command = 0x10 - 0x17
