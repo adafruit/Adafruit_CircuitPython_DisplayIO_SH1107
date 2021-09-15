@@ -131,7 +131,13 @@ class SH1107(displayio.Display):
         rotation=0,
         **kwargs
     ):
+        rotation = (rotation + _ROTATION_OFFSET) % 360
+        if rotation in (0, 180):
+            multiplex = kwargs["width"] - 1
+        else:
+            multiplex = kwargs["height"] - 1
         init_sequence = bytearray(_INIT_SEQUENCE)
+        init_sequence[16] = multiplex
         init_sequence[19] = display_offset
         super().__init__(
             bus,
@@ -143,7 +149,7 @@ class SH1107(displayio.Display):
             data_as_commands=True,  # every byte will have a command byte preceding
             brightness_command=0x81,
             single_byte_bounds=True,
-            rotation=(rotation + _ROTATION_OFFSET) % 360,
+            rotation=rotation,
             # for sh1107 use column and page addressing.
             #                lower column command = 0x00 - 0x0F
             #                upper column command = 0x10 - 0x17
