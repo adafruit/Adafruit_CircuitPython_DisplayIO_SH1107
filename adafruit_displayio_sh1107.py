@@ -96,7 +96,7 @@ else:
         b"\x20\x00"  # vertical (column) addressing mode (POR=0x20)
         b"\xa0\x00"  # segment remap = 1 (POR=0, down rotation)
         b"\xc0\x00"  # common output scan direction = 0 (0 to n-1 (POR=0))
-        b"\xa8\x01\x3f"  # multiplex ratio = 64 (POR=0x7F)
+        b"\xa8\x01\x7f"  # multiplex ratio = 64 (POR=0x7F)
         b"\xd3\x01\x60"  # set display offset mode = 0x60
         # b"\xd5\x01\x51"  # divide ratio/oscillator: divide by 2, fOsc (POR)
         b"\xd9\x01\x22"  # pre-charge/dis-charge period mode: 2 DCLKs/2 DCLKs (POR)
