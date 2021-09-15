@@ -68,7 +68,8 @@ The hardware display offset to use when configuring the SH1107 for the
 
 # Sequence from sh1107 framebuf driver formatted for displayio init
 # we fixed sh110x addressing in 7, so we have slightly different setups
-if sys.implementation.version[0] < 7:
+if sys.implementation.name == "circuitpython" and sys.implementation.version[0] < 7:
+    # if sys.implementation.version[0] < 7:
     _INIT_SEQUENCE = (
         b"\xae\x00"  # display off, sleep mode
         b"\xdc\x01\x00"  # display start line = 0 (POR = 0)
