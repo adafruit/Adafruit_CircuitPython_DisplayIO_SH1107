@@ -98,6 +98,11 @@ Usage Example
     inner_sprite = displayio.TileGrid(inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER)
     splash.append(inner_sprite)
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/displayio-sh1107/en/latest/>`_.
+
 Contributing
 ============
 
