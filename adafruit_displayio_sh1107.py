@@ -51,6 +51,20 @@ This is the default if not passed in.
     display = SH1107(bus, width=128, height=64)
 """
 
+DISPLAY_OFFSET_ADAFRUIT_128x128_OLED_5297 = const(0x00)
+"""
+The hardware display offset to use when configuring the SH1107 for the
+`Adafruit Monochrome 1.12" 128x128 OLED <https://www.adafruit.com/product/5297>`_.
+
+.. code-block::
+
+    from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_ADAFRUIT_128x128_OLED_5297
+
+    # Constructor for the Adafruit Monochrome 1.12" 128x128 OLED
+    display = SH1107(bus, width=128, height=128,
+        display_offset=DISPLAY_OFFSET_ADAFRUIT_128x128_OLED_5297, rotation=90)
+"""
+
 DISPLAY_OFFSET_PIMORONI_MONO_OLED_PIM374 = const(0x00)
 """
 The hardware display offset to use when configuring the SH1107 for the
