@@ -196,7 +196,7 @@ class SH1107(displayio.Display):
             4) The MP can access (update) the built-in display RAM
         """
         if self._is_awake:
-            self.bus.send(int(0xAE), "")  # 0xAE = display off, sleep mode
+            self.bus.send(0xAE, b"")  # 0xAE = display off, sleep mode
             self._is_awake = False
 
     def wake(self):
@@ -204,5 +204,5 @@ class SH1107(displayio.Display):
         Wake display from sleep mode
         """
         if not self._is_awake:
-            self.bus.send(int(0xAF), "")  # 0xAF = display on
+            self.bus.send(0xAF, b"")  # 0xAF = display on
             self._is_awake = True
