@@ -61,7 +61,7 @@ def apply_life_rule(old, new):
 
 
 def randomize(output, fraction=0.33):
-    """ Fill 'fraction' out of all the cells. """
+    """Fill 'fraction' out of all the cells."""
     for i in range(output.height * output.width):
         output[i] = random.random() < fraction
 
