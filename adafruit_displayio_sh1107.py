@@ -141,11 +141,11 @@ class SH1107(displayio.Display):
 
     def __init__(
         self,
-        bus,
-        display_offset=DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
-        rotation=0,
+        bus: displayio.I2CDisplay,
+        display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
+        rotation: int = 0,
         **kwargs
-    ):
+    ) -> None:
         rotation = (rotation + _ROTATION_OFFSET) % 360
         if rotation in (0, 180):
             multiplex = kwargs["width"] - 1
@@ -174,7 +174,7 @@ class SH1107(displayio.Display):
         self._is_awake = True  # Display starts in active state (_INIT_SEQUENCE)
 
     @property
-    def is_awake(self):
+    def is_awake(self) -> bool:
         """
         The power state of the display. (read-only)
 
@@ -184,7 +184,7 @@ class SH1107(displayio.Display):
         """
         return self._is_awake
 
-    def sleep(self):
+    def sleep(self) -> None:
         """
         Put display into sleep mode. The display uses < 5uA in sleep mode
 
@@ -199,7 +199,7 @@ class SH1107(displayio.Display):
             self.bus.send(0xAE, b"")  # 0xAE = display off, sleep mode
             self._is_awake = False
 
-    def wake(self):
+    def wake(self) -> None:
         """
         Wake display from sleep mode
         """
