@@ -30,6 +30,11 @@ import sys
 import displayio
 from micropython import const
 
+try:
+    from typing import Union
+except ImportError:
+    pass
+
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DisplayIO_SH1107.git"
 
@@ -141,7 +146,7 @@ class SH1107(displayio.Display):
 
     def __init__(
         self,
-        bus: displayio.I2CDisplay,
+        bus: Union[displayio.I2CDisplay, displayio.Fourwire],
         display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
         rotation: int = 0,
         **kwargs
