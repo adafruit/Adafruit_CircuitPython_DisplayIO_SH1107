@@ -146,7 +146,7 @@ class SH1107(displayio.Display):
 
     def __init__(
         self,
-        bus: Union[displayio.I2CDisplay, displayio.Fourwire],
+        bus: Union[displayio.I2CDisplay, displayio.FourWire],
         display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
         rotation: int = 0,
         **kwargs
