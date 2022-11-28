@@ -16,7 +16,9 @@ from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_ADAFRUIT_128x128_OL
 displayio.release_displays()
 
 # For I2C
-display_bus = displayio.I2CDisplay(board.I2C(), device_address=0x3D)
+i2c = board.I2C()  # uses board.SCL and board.SDA
+# i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
+display_bus = displayio.I2CDisplay(i2c, device_address=0x3D)
 
 # For SPI:
 # import busio
