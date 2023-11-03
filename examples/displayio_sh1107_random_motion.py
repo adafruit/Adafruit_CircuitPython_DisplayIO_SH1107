@@ -35,7 +35,7 @@ display = adafruit_displayio_sh1107.SH1107(display_bus, width=WIDTH, height=HEIG
 
 # Make the display context
 splash = displayio.Group()
-display.show(splash)
+display.root_group = splash
 
 color_bitmap = displayio.Bitmap(WIDTH, HEIGHT, 1)
 color_palette = displayio.Palette(1)
