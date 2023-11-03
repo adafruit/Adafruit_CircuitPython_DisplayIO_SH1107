@@ -82,7 +82,7 @@ Usage Example
 
     # Make the display context
     splash = displayio.Group()
-    display.show(splash)
+    display.root_group = splash
 
     color_bitmap = displayio.Bitmap(WIDTH, HEIGHT, 1)
     color_palette = displayio.Palette(1)
