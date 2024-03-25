@@ -128,7 +128,7 @@ while True:
     for _ in range(n):
         display.root_group = g1
         apply_life_rule(b1, b2)
-        display.show(g2)
+        display.root_group = g2
         apply_life_rule(b2, b1)
 
     # After 2*n generations, fill the board with random values and
