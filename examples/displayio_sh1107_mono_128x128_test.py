@@ -9,6 +9,18 @@ This example writes text to the display, and draws a series of squares and a rec
 
 import board
 import displayio
+
+# Compatibility with both CircuitPython 8.x.x and 9.x.x.
+# Remove after 8.x.x is no longer a supported release.
+try:
+    from i2cdisplaybus import I2CDisplayBus
+
+    # from fourwire import FourWire
+except ImportError:
+    from displayio import I2CDisplay as I2CDisplayBus
+
+    # from displayio import FourWire
+
 import terminalio
 from adafruit_display_text import bitmap_label as label
 from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_ADAFRUIT_128x128_OLED_5297
@@ -18,12 +30,12 @@ displayio.release_displays()
 # For I2C
 i2c = board.I2C()  # uses board.SCL and board.SDA
 # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
-display_bus = displayio.I2CDisplay(i2c, device_address=0x3D)
+display_bus = I2CDisplayBus(i2c, device_address=0x3D)
 
 # For SPI:
 # import busio
 # spi_bus = busio.SPI(board.SCK, board.MOSI)
-# display_bus = displayio.FourWire(spi_bus, command=board.D6, chip_select=board.D5, reset=board.D9)
+# display_bus = FourWire(spi_bus, command=board.D6, chip_select=board.D5, reset=board.D9)
 
 # Width, height and rotation for Monochrome 1.12" 128x128 OLED
 WIDTH = 128
