@@ -27,11 +27,26 @@ Implementation Notes
 """
 
 import sys
-import displayio
+
+
+try:
+    from busdisplay import BusDisplay as Display
+    from fourwire import FourWire
+except ImportError:
+    from displayio import Display
+    from displayio import FourWire
+
 from micropython import const
 
 try:
     from typing import Union
+
+    try:
+        from i2cdisplaybus import I2CDisplayBus
+    except ImportError:
+        # pylint: disable=ungrouped-imports
+        from displayio import I2CDisplay as I2CDisplayBus
+
 except ImportError:
     pass
 
@@ -130,7 +145,7 @@ else:
     _ROTATION_OFFSET = 90
 
 
-class SH1107(displayio.Display):
+class SH1107(Display):
     """
     SH1107 driver for use with DisplayIO
 
@@ -146,7 +161,7 @@ class SH1107(displayio.Display):
 
     def __init__(
         self,
-        bus: Union[displayio.I2CDisplay, displayio.FourWire],
+        bus: Union[I2CDisplayBus, FourWire],
         display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
         rotation: int = 0,
         **kwargs
