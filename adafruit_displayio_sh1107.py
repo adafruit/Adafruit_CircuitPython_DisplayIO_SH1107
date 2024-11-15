@@ -122,7 +122,6 @@ if sys.implementation.name == "circuitpython" and sys.implementation.version[0] 
         b"\xaf\x00"  # DISPLAY_ON
     )
     _PIXELS_IN_ROW = True
-    _ROTATION_OFFSET = 0
 else:
     _INIT_SEQUENCE = (
         b"\xae\x00"  # display off, sleep mode
@@ -142,7 +141,6 @@ else:
         b"\xaf\x00"  # DISPLAY_ON
     )
     _PIXELS_IN_ROW = False
-    _ROTATION_OFFSET = 90
 
 
 class SH1107(Display):
@@ -163,10 +161,9 @@ class SH1107(Display):
         self,
         bus: Union[I2CDisplayBus, FourWire],
         display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
-        rotation: int = 0,
+        rotation: int = 90,
         **kwargs
     ) -> None:
-        rotation = (rotation + _ROTATION_OFFSET) % 360
         if rotation in (0, 180):
             multiplex = kwargs["width"] - 1
         else:
