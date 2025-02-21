@@ -6,7 +6,6 @@ Author: Mark Roberts (mdroberts1243) from Adafruit code
 Conway's game of life.
 """
 
-
 import random
 import time
 

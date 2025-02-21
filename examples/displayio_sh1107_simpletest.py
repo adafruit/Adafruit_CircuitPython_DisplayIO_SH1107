@@ -8,7 +8,6 @@ background, a smaller black rectangle, miscellaneous stuff and some white text.
 
 """
 
-
 import board
 import displayio
 
@@ -23,6 +22,7 @@ import terminalio
 
 # can try import bitmap_label below for alternative
 from adafruit_display_text import label
+
 import adafruit_displayio_sh1107
 
 displayio.release_displays()
@@ -55,9 +55,7 @@ splash.append(bg_sprite)
 inner_bitmap = displayio.Bitmap(WIDTH - BORDER * 2, HEIGHT - BORDER * 2, 1)
 inner_palette = displayio.Palette(1)
 inner_palette[0] = 0x000000  # Black
-inner_sprite = displayio.TileGrid(
-    inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER
-)
+inner_sprite = displayio.TileGrid(inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER)
 splash.append(inner_sprite)
 
 # Draw some white squares
@@ -78,9 +76,7 @@ text1 = "0123456789ABCDEF123456789AB"  # overly long to see where it clips
 text_area = label.Label(terminalio.FONT, text=text1, color=0xFFFFFF, x=8, y=8)
 splash.append(text_area)
 text2 = "SH1107"
-text_area2 = label.Label(
-    terminalio.FONT, text=text2, scale=2, color=0xFFFFFF, x=9, y=44
-)
+text_area2 = label.Label(terminalio.FONT, text=text2, scale=2, color=0xFFFFFF, x=9, y=44)
 splash.append(text_area2)
 
 while True:
