@@ -28,25 +28,14 @@ Implementation Notes
 
 import sys
 
-
-try:
-    from busdisplay import BusDisplay as Display
-    from fourwire import FourWire
-except ImportError:
-    from displayio import Display
-    from displayio import FourWire
-
+from busdisplay import BusDisplay as Display
+from fourwire import FourWire
 from micropython import const
 
 try:
     from typing import Union
 
-    try:
-        from i2cdisplaybus import I2CDisplayBus
-    except ImportError:
-        # pylint: disable=ungrouped-imports
-        from displayio import I2CDisplay as I2CDisplayBus
-
+    from i2cdisplaybus import I2CDisplayBus
 except ImportError:
     pass
 
@@ -162,9 +151,9 @@ class SH1107(Display):
         bus: Union[I2CDisplayBus, FourWire],
         display_offset: int = DISPLAY_OFFSET_ADAFRUIT_FEATHERWING_OLED_4650,
         rotation: int = 90,
-        **kwargs
+        **kwargs,
     ) -> None:
-        if rotation in (0, 180):
+        if rotation in {0, 180}:
             multiplex = kwargs["width"] - 1
         else:
             multiplex = kwargs["height"] - 1

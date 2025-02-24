@@ -10,19 +10,11 @@ This example writes text to the display, and draws a series of squares and a rec
 import board
 import displayio
 
-# Compatibility with both CircuitPython 8.x.x and 9.x.x.
-# Remove after 8.x.x is no longer a supported release.
-try:
-    from i2cdisplaybus import I2CDisplayBus
-
-    # from fourwire import FourWire
-except ImportError:
-    from displayio import I2CDisplay as I2CDisplayBus
-
-    # from displayio import FourWire
-
+# from fourwire import FourWire
 import terminalio
 from adafruit_display_text import bitmap_label as label
+from i2cdisplaybus import I2CDisplayBus
+
 from adafruit_displayio_sh1107 import SH1107, DISPLAY_OFFSET_ADAFRUIT_128x128_OLED_5297
 
 displayio.release_displays()
@@ -68,9 +60,7 @@ splash.append(bg_sprite)
 inner_bitmap = displayio.Bitmap(WIDTH - BORDER * 2, HEIGHT - BORDER * 2, 1)
 inner_palette = displayio.Palette(1)
 inner_palette[0] = 0x000000  # Black
-inner_sprite = displayio.TileGrid(
-    inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER
-)
+inner_sprite = displayio.TileGrid(inner_bitmap, pixel_shader=inner_palette, x=BORDER, y=BORDER)
 splash.append(inner_sprite)
 
 # Draw some white squares
@@ -79,9 +69,7 @@ small_square = displayio.TileGrid(small_bitmap, pixel_shader=color_palette, x=58
 splash.append(small_square)
 
 medium_bitmap = displayio.Bitmap(16, 16, 1)
-medium_square = displayio.TileGrid(
-    medium_bitmap, pixel_shader=color_palette, x=71, y=15
-)
+medium_square = displayio.TileGrid(medium_bitmap, pixel_shader=color_palette, x=71, y=15)
 splash.append(medium_square)
 
 large_bitmap = displayio.Bitmap(32, 32, 1)
@@ -89,9 +77,7 @@ large_square = displayio.TileGrid(large_bitmap, pixel_shader=color_palette, x=91
 splash.append(large_square)
 
 bottom_bitmap = displayio.Bitmap(110, 50, 1)
-bottom_rectangle = displayio.TileGrid(
-    bottom_bitmap, pixel_shader=color_palette, x=10, y=69
-)
+bottom_rectangle = displayio.TileGrid(bottom_bitmap, pixel_shader=color_palette, x=10, y=69)
 splash.append(bottom_rectangle)
 
 # Draw some label text
@@ -102,9 +88,7 @@ size_text = "128x128"
 size_text_area = label.Label(terminalio.FONT, text=size_text, color=0xFFFFFF, x=8, y=25)
 splash.append(size_text_area)
 oled_text = "OLED"
-oled_text_area = label.Label(
-    terminalio.FONT, text=oled_text, scale=2, color=0xFFFFFF, x=9, y=44
-)
+oled_text_area = label.Label(terminalio.FONT, text=oled_text, scale=2, color=0xFFFFFF, x=9, y=44)
 splash.append(oled_text_area)
 
 while True:
