@@ -13,18 +13,11 @@ import time
 
 import board
 import displayio
-
-# Compatibility with both CircuitPython 8.x.x and 9.x.x.
-# Remove after 8.x.x is no longer a supported release.
-try:
-    from i2cdisplaybus import I2CDisplayBus
-except ImportError:
-    from displayio import I2CDisplay as I2CDisplayBus
-
 import terminalio
 
 # can try import bitmap_label below for alternative
 from adafruit_display_text import label
+from i2cdisplaybus import I2CDisplayBus
 
 import adafruit_displayio_sh1107
 
