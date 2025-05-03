@@ -108,7 +108,7 @@ if sys.implementation.name == "circuitpython" and sys.implementation.version[0] 
         b"\xb0\x00"  # set page address = 0 (POR)
         b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
         b"\xa6\x00"  # normal (not reversed) display
-        b"\xaf\x00"  # DISPLAY_ON
+        b"\xaf\x80\x64"  # DISPLAY_ON + 100ms delay
     )
     _PIXELS_IN_ROW = True
 else:
@@ -127,7 +127,7 @@ else:
         # b"\xb0\x00"  # set page address = 0 (POR)
         b"\xa4\x00"  # entire display off, retain RAM, normal status (POR)
         b"\xa6\x00"  # normal (not reversed) display
-        b"\xaf\x00"  # DISPLAY_ON
+        b"\xaf\x80\x64"  # DISPLAY_ON + 100ms delay
     )
     _PIXELS_IN_ROW = False
 
