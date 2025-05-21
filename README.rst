@@ -64,6 +64,7 @@ Usage Example
     import displayio
     import terminalio
     import bitmap_label as label # from adafruit_display_text
+    from i2cdisplaybus import I2CDisplayBus
     import adafruit_displayio_sh1107
 
     displayio.release_displays()
@@ -71,7 +72,7 @@ Usage Example
 
     # Use for I2C
     i2c = board.I2C()
-    display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
+    display_bus = I2CDisplayBus(i2c, device_address=0x3C)
 
     # SH1107 is vertically oriented 64x128
     WIDTH = 128
