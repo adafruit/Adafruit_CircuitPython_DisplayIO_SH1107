@@ -85,11 +85,11 @@ while True:
     text_area2.x = x
     text_area2.y = y
     if random.random() > 0.5:
-        x = x + 1
+        x += 1
     else:
-        x = x - 1
+        x -= 1
     if random.random() > 0.5:
-        y = y + 1
+        y += 1
     else:
-        y = y - 1
+        y -= 1
     time.sleep(0.02)
